@@ -1,19 +1,23 @@
-resource "aviatrix_transit_gateway" "transit" {
-  cloud_type           = 1
-  account_name         = var.account_name
-  gw_name              = "transit-gw"
-  vpc_region           = "us-east-1"
-  vpc_id               = "vpc-12345678"
-  gw_size              = "t3.medium"
-  ha_gw                = true
-  single_az_ha         = false
+terraform {
+  required_providers {
+    aviatrix = {
+      source  = "AviatrixSystems/aviatrix"
+      version = "1.8.0"  # or latest stable version
+    }
+  }
+
+  backend "remote" {
+    organization = "linn8888"
+
+    workspaces {
+      name = "your-workspace-name"
+    }
+  }
 }
 
-resource "aviatrix_spoke_gateway" "spoke" {
-  cloud_type   = 1
-  account_name = var.account_name
-  gw_name      = "spoke-gw"
-  vpc_region   = "us-east-1"
-  vpc_id       = "vpc-87654321"
-  gw_size      = "t3.medium"
+provider "aviatrix" {
+  username = var.aviatrix_username
+  password = var.aviatrix_password
+  controller_ip = var.aviatrix_controller_ip
+  customer_name = var.account_name
 }

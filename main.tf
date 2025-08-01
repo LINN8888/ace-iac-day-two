@@ -10,7 +10,7 @@ terraform {
     organization = "linn8888"
 
     workspaces {
-      name = "your-workspace-name"
+      name = "ace-iac-day-two"
     }
   }
 }
